@@ -246,7 +246,6 @@ body {
           justify-content: flex-start;
   font-family: "Rubik", sans-serif;
   position: relative;
-  overflow-y: hidden;
 }
 @media screen and (min-width: 768px) {
   .chat-app {

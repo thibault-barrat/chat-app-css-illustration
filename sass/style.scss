@@ -111,7 +111,6 @@ body {
     justify-content: flex-start;
     font-family: $rubik;
     position: relative;
-    overflow-y: hidden;
     @media screen and (min-width: $breakpoint) {
         flex-direction: row;
         justify-content: flex-end;
