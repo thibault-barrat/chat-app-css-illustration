@@ -44,7 +44,7 @@ function images() {
 // Compiles SCSS files in CSS
 function sasscompile() {
   return gulp
-      .src( `${paths.sass}/*.scss` )
+      .src( `${paths.sass}/style.scss` )
       .pipe( sourcemaps.init( { loadMaps: true } ) )
       .pipe( plumber( {
           errorHandler: function( err ) {
@@ -98,7 +98,7 @@ function cleandist() {
 
 // Copies the files to the /dist folder
 function dist() {
-  cleandist();
+  gulp.series(cleandist);
   const ignore = [`!${paths.node}`, `!${paths.node}/**`, `!${paths.dev}`, `!${paths.dev}/**`, `!${paths.dist}`, `!${paths.dist}/**`, `!${paths.sass}`, `!${paths.sass}/**`, '!./design', '!./design/**', '!readme.txt', '!README.md', '!README-template.md', '!style-guide.md', '!package.json', '!package-lock.json', '!gulpfile.js', '!gulpconfig.json', '!CHANGELOG.md', '!.travis.yml', '!jshintignore',  '!codesniffer.ruleset.xml', '!_README.md', '!composer.json', '!gulpconfig.json' ];
   console.log({ ignore })
 
@@ -109,10 +109,10 @@ function dist() {
 
 // Watch files
 function watchFiles() {
-  gulp.watch(`${paths.sass}/**/*.scss`, gulp.series(styles, dist));
-  gulp.watch(`${paths.dev}/js/**/*.js`, gulp.series(scripts, dist));
-  gulp.watch(`${paths.dist}/**`, browserSyncReload);
-  gulp.watch(`${paths.imgsrc} /**`, gulp.series(images, dist));
+  gulp.watch(`${paths.sass}/**/*.scss`, gulp.series(styles, dist, browserSyncReload));
+  gulp.watch(`${paths.dev}/js/**/*.js`, gulp.series(scripts, dist, browserSyncReload));
+  gulp.watch(`${paths.imgsrc} /**`, gulp.series(images, dist, browserSyncReload));
+  gulp.watch( '*.html', gulp.series(dist, browserSyncReload));
 }
 
 // define complex tasks
